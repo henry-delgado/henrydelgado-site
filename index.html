@@ -1,0 +1,817 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Home Groups is an affordable SaaS for church home Bible studies—streamline registration, attendance tracking, and reporting. Available in English and Spanish." />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <title>Home Groups — Church Home Bible Study Attendance & Reporting</title>
+
+  <!-- Optional: use your logo as the browser tab icon -->
+  <link rel="icon" href="HG-Logo.png" />
+
+  <style>
+    :root{
+      /* Palette extracted from your logo */
+      --navy: #00113B;
+      --orange: #F4A12F;
+      --red: #F02C3E;
+      --magenta: #D7137B;
+      --green: #64B872;
+      --sky: #68BEF9;
+
+      /* App theme */
+      --bg: var(--navy);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.70);
+      --subtle: rgba(255,255,255,.55);
+      --line: rgba(255,255,255,.14);
+
+      --primary: var(--sky);
+      --primary2: #7c5cff; /* gentle violet accent */
+      --accent: var(--green);
+
+      --shadow: 0 24px 60px rgba(0,0,0,.35);
+      --radius: 18px;
+
+      --max: 1100px;
+      --pad: clamp(18px, 3vw, 28px);
+    }
+
+    *{ box-sizing: border-box; }
+    html, body{ height: 100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background:
+        radial-gradient(1100px 600px at 20% 10%, rgba(104,190,249,.26), transparent 60%),
+        radial-gradient(900px 550px at 85% 25%, rgba(244,161,47,.20), transparent 60%),
+        radial-gradient(700px 500px at 70% 88%, rgba(100,184,114,.16), transparent 65%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    a{ color: inherit; text-decoration: none; }
+    a:hover{ text-decoration: underline; text-underline-offset: 4px; }
+
+    .container{
+      width: min(var(--max), calc(100% - (var(--pad) * 2)));
+      margin: 0 auto;
+    }
+
+    header{ padding: 26px 0 10px; }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap: wrap;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width: 240px;
+    }
+
+    .logo-img{
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      object-fit: cover;
+    }
+
+    .brand-name{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+    .brand-name strong{
+      font-size: 15px;
+      letter-spacing: .2px;
+    }
+    .brand-name span{
+      font-size: 12px;
+      color: var(--subtle);
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .pill{
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 25px rgba(0,0,0,.18);
+    }
+
+    .cta{
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--primary2), var(--primary));
+      border: 0;
+      color: #06101a;
+      font-weight: 800;
+      box-shadow: 0 14px 34px rgba(104,190,249,.18);
+    }
+    .cta:hover{ filter: brightness(1.03); text-decoration: none; }
+
+    .hero{ padding: 40px 0 10px; }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .hero-card{
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: clamp(20px, 4vw, 34px);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-card:before{
+      content:"";
+      position:absolute;
+      inset:-20%;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(104,190,249,.24), transparent 60%),
+        radial-gradient(circle at 85% 30%, rgba(244,161,47,.18), transparent 60%),
+        radial-gradient(circle at 50% 90%, rgba(215,19,123,.12), transparent 65%);
+      filter: blur(2px);
+      pointer-events:none;
+    }
+    .hero-card > *{ position: relative; }
+
+    .badge{
+      display:flex;
+      flex-wrap: wrap;
+      align-items:center;
+      gap:10px;
+      width: fit-content;
+    }
+
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .dot{
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 6px rgba(100,184,114,.14);
+    }
+
+    h1{
+      margin: 16px 0 10px;
+      font-size: clamp(28px, 4.4vw, 48px);
+      line-height: 1.12;
+      letter-spacing: -0.6px;
+    }
+
+    .lead{
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: clamp(15px, 1.5vw, 18px);
+      max-width: 62ch;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      font-weight: 700;
+      text-decoration: none;
+      min-width: 160px;
+    }
+
+    .btn.primary{
+      border: 0;
+      background: linear-gradient(135deg, var(--primary2), var(--primary));
+      color: #06101a;
+      box-shadow: 0 16px 40px rgba(104,190,249,.18);
+    }
+    .btn:hover{ text-decoration: none; filter: brightness(1.03); }
+
+    .note{
+      margin-top: 14px;
+      color: var(--subtle);
+      font-size: 13px;
+    }
+
+    .side-card{
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      border-radius: var(--radius);
+      box-shadow: 0 14px 40px rgba(0,0,0,.26);
+      padding: 18px;
+      display:flex;
+      flex-direction:column;
+      gap: 14px;
+    }
+
+    .side-card h3{
+      margin: 4px 0 0;
+      font-size: 16px;
+      letter-spacing: .2px;
+    }
+
+    .kpi{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .kpi .tile{
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+      background: rgba(255,255,255,.03);
+    }
+    .kpi .tile strong{ display:block; font-size: 15px; }
+    .kpi .tile span{
+      display:block;
+      font-size: 12px;
+      color: var(--subtle);
+      margin-top: 4px;
+    }
+
+    .hero-logo{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-top: 6px;
+    }
+    .hero-logo img{
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      object-fit: cover;
+      box-shadow: 0 12px 34px rgba(0,0,0,.25);
+    }
+    .hero-logo div{
+      color: var(--subtle);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    section{ padding: 42px 0 10px; }
+
+    .section-title{
+      display:flex;
+      align-items:baseline;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .section-title h2{
+      margin:0;
+      font-size: 20px;
+      letter-spacing: .2px;
+    }
+    .section-title p{
+      margin:0;
+      color: var(--subtle);
+      font-size: 13px;
+      max-width: 70ch;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .card{
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.04);
+      box-shadow: 0 14px 40px rgba(0,0,0,.22);
+      padding: 16px;
+    }
+
+    .card h3{ margin: 10px 0 6px; font-size: 15px; }
+    .card p{ margin: 0; color: var(--muted); font-size: 14px; }
+
+    .icon{
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      display:grid;
+      place-items:center;
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--line);
+    }
+    .icon svg{ width: 20px; height: 20px; opacity: .9; }
+
+    .how{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .steps{
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+    }
+
+    .step{
+      display:flex;
+      gap: 12px;
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+    }
+
+    .num{
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: rgba(104,190,249,.18);
+      border: 1px solid rgba(104,190,249,.34);
+      display:grid;
+      place-items:center;
+      font-weight: 900;
+      color: rgba(255,255,255,.92);
+    }
+
+    .step strong{ display:block; font-size: 14px; }
+    .step span{ display:block; font-size: 13px; color: var(--muted); margin-top: 3px; }
+
+    .ul{
+      margin: 12px 0 0;
+      padding: 0 0 0 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .ul li{ margin: 8px 0; }
+
+    .pricing{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .price-card{
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: 0 18px 55px rgba(0,0,0,.28);
+      padding: 18px;
+    }
+
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .price{
+      font-size: 26px;
+      font-weight: 950;
+      margin: 10px 0 4px;
+      letter-spacing: -0.3px;
+    }
+    .price small{ font-size: 13px; color: var(--subtle); font-weight: 700; }
+
+    .contact{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+      padding: 18px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      box-shadow: 0 14px 40px rgba(0,0,0,.22);
+      flex-wrap: wrap;
+    }
+
+    footer{
+      padding: 34px 0 40px;
+      color: var(--subtle);
+      font-size: 13px;
+    }
+
+    .footer-grid{
+      display:flex;
+      justify-content:space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--line);
+      padding-top: 18px;
+    }
+
+    .links{
+      display:flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 920px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .grid{ grid-template-columns: 1fr; }
+      .how{ grid-template-columns: 1fr; }
+      .pricing{ grid-template-columns: 1fr; }
+      .nav-links{ justify-content:flex-start; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="container">
+    <div class="nav">
+      <a class="brand" href="#top" aria-label="Home Groups">
+        <img class="logo-img" src="HG-Logo.png" alt="Home Groups logo" />
+        <div class="brand-name">
+          <strong>Home Groups</strong>
+          <span>Church home Bible studies — simplified</span>
+        </div>
+      </a>
+
+      <div class="nav-links">
+        <a class="pill" href="#features">Features</a>
+        <a class="pill" href="#how">How it works</a>
+        <a class="pill" href="#pricing">Trial & Pricing</a>
+        <a class="cta" href="mailto:support@henrydelgado.me?subject=Home%20Groups%20-%20Early%20Access">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top" class="container">
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-card">
+          <div class="badge">
+            <span class="chip"><span class="dot" aria-hidden="true"></span> Built for churches & nonprofits</span>
+            <span class="chip">Available in English & Spanish</span>
+            <span class="chip">Affordable by design</span>
+          </div>
+
+          <h1>Streamline home group registration, attendance tracking, and reporting — in a few clicks.</h1>
+
+          <p class="lead">
+            <strong>Home Groups</strong> is a SaaS application that helps churches run home Bible studies with a
+            customer-experience-first approach: self-intuitive flows, mobile-friendly screens, and clear reporting for leaders.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn primary" href="mailto:hello@henrydelgado.me?subject=Home%20Groups%20-%20Start%20Trial">
+              Start a free trial <span aria-hidden="true">→</span>
+            </a>
+            <a class="btn" href="#features">
+              Explore features <span aria-hidden="true">↓</span>
+            </a>
+          </div>
+
+          <div class="hero-logo" aria-label="Home Groups logo">
+            <img src="HG-Logo.png" alt="Home Groups icon" />
+            <div>
+              Created by <strong>Henry Delgado</strong> — Software Engineer & Business Entrepreneur.<br/>
+              Built to serve churches with simple workflows and ministry-friendly pricing.
+            </div>
+          </div>
+
+          <p class="note">
+            Tip: Start with one or two groups during evaluation, then expand to the full church when you're ready.
+          </p>
+        </div>
+
+        <aside class="side-card" aria-label="Highlights">
+          <h3>Designed for leaders</h3>
+          <div class="kpi">
+            <div class="tile">
+              <strong>Fast setup</strong>
+              <span>Register a church & groups in minutes</span>
+            </div>
+            <div class="tile">
+              <strong>Mobile-first</strong>
+              <span>Few taps, self-intuitive flows</span>
+            </div>
+            <div class="tile">
+              <strong>Role-based</strong>
+              <span>Admins, pastors, group leaders</span>
+            </div>
+            <div class="tile">
+              <strong>Visibility</strong>
+              <span>Dashboards & weekly reporting</span>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:2px;">
+            <h3 style="margin-top:0;">Quick note</h3>
+            <p style="margin:0;">
+              This landing page is intentionally simple for early evaluation. As the product matures, it will include
+              detailed documentation, onboarding, and support resources.
+            </p>
+            <p style="margin:10px 0 0; color: var(--subtle); font-size: 13px;">
+              Replace the LinkedIn link below with your real profile URL.
+            </p>
+            <p style="margin:10px 0 0;">
+              <a class="pill" href="https://www.linkedin.com/in/henryhdelgado" target="_blank" rel="noreferrer noopener">LinkedIn</a>
+            </p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="section-title">
+        <h2>Core features</h2>
+        <p>
+          Everything you need to manage home Bible studies—from onboarding to weekly attendance and leadership reporting.
+        </p>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M7 7h10M7 12h10M7 17h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3>Church registration & admins</h3>
+          <p>Register your church and create admin users to support user management and oversight.</p>
+        </div>
+
+        <div class="card">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M16 11a4 4 0 1 0-8 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M3 21c1.5-4 5-6 9-6s7.5 2 9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3>Group leaders & memberships</h3>
+          <p>Admins create group leaders. Leaders manage membership for their own groups.</p>
+        </div>
+
+        <div class="card">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M7 3v3M17 3v3M4 8h16M6 12h5M6 16h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M5 6h14a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </div>
+          <h3>Weekly & bulk attendance</h3>
+          <p>Leaders submit weekly attendance (one per week) or bulk upload older data for the year.</p>
+        </div>
+
+        <div class="card">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M4 19V5M4 19h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M8 16v-6M12 16V8M16 16v-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3>Dashboards & reporting</h3>
+          <p>Group leaders see team stats. Pastors/admins see church-wide attendance and trends.</p>
+        </div>
+
+        <div class="card">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M12 22s8-4 8-10V7l-8-4-8 4v5c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2"/>
+              <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3>Pastoral visibility</h3>
+          <p>View overall home groups attendance, prayer requests, birthdays, and basic demographics (optional).</p>
+        </div>
+
+        <div class="card">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M12 22a10 10 0 1 0-10-10" stroke="currentColor" stroke-width="2"/>
+              <path d="M12 8v5l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M21 21l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3>Reminders & alerts</h3>
+          <p>Notifications when attendance is missing, including reminders to group leaders.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="how">
+      <div class="section-title">
+        <h2>How it works</h2>
+        <p>A workflow that matches how churches operate—without spreadsheets and manual back-and-forth.</p>
+      </div>
+
+      <div class="how">
+        <div class="steps">
+          <div class="step">
+            <div class="num">1</div>
+            <div>
+              <strong>Register your church</strong>
+              <span>Create the organization and invite admin users who help manage the system.</span>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="num">2</div>
+            <div>
+              <strong>Create home groups & leaders</strong>
+              <span>Admins create group leaders. Leaders maintain membership for their own groups.</span>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="num">3</div>
+            <div>
+              <strong>Track attendance weekly (or bulk)</strong>
+              <span>Submit weekly attendance or bulk upload older attendance records for the year.</span>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="num">4</div>
+            <div>
+              <strong>Review dashboards & reports</strong>
+              <span>Group leaders see stats; pastors/admins see church-wide reporting and trends.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 style="margin-top:0;">Bilingual-friendly</h3>
+          <p>
+            Home Groups is designed to support churches serving bilingual communities.
+            The platform is planned to be available in <strong>English and Spanish</strong>.
+          </p>
+
+          <ul class="ul">
+            <li>Simple onboarding, mobile-first experience</li>
+            <li>Attendance performance and submission visibility</li>
+            <li>Role-based access aligned to church leadership</li>
+            <li>Reminders for weekly attendance submissions</li>
+          </ul>
+
+          <p class="note">
+            Have existing data? Bulk upload support helps keep the year’s history intact.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing">
+      <div class="section-title">
+        <h2>Trial & pricing</h2>
+        <p>Start free, then upgrade when you're ready. Pricing is designed to support churches and nonprofits.</p>
+      </div>
+
+      <div class="pricing">
+        <div class="price-card">
+          <span class="tag">Free trial</span>
+          <div class="price">Start at $0 <small>— evaluate before you commit</small></div>
+          <p style="margin:0; color: var(--muted); font-size: 14px;">
+            Try Home Groups with your ministry team. When you’re ready, upgrade for expanded features and capacity.
+          </p>
+
+          <ul class="ul">
+            <li>Quick onboarding and setup</li>
+            <li>Group leader workflows for attendance</li>
+            <li>Dashboards and reporting visibility</li>
+            <li>Email reminders for missing attendance submissions</li>
+          </ul>
+
+          <div class="hero-actions" style="margin-top: 14px;">
+            <a class="btn primary" href="mailto:support@henrydelgado.me?subject=Home%20Groups%20-%20Trial%20Request">
+              Request trial access <span aria-hidden="true">→</span>
+            </a>
+            <a class="btn" href="#contact">
+              Questions? <span aria-hidden="true">↓</span>
+            </a>
+          </div>
+
+          <p class="note">
+            Note: Final pricing tiers may evolve as features mature. Early adopters will receive clear communication before changes.
+          </p>
+        </div>
+
+        <div class="price-card" style="background: rgba(255,255,255,.04);">
+          <span class="tag">Transparency</span>
+          <div class="price" style="font-size: 18px;">Clear policies</div>
+          <p style="margin:0; color: var(--muted); font-size: 14px;">
+            We keep billing simple and fair for ministry teams.
+          </p>
+
+          <ul class="ul">
+            <li><strong>Cancel anytime</strong> — no long-term lock-in</li>
+            <li><strong>Support</strong> — help available via email</li>
+            <li><strong>Privacy</strong> — basic data handling transparency</li>
+            <li><strong>Security</strong> — modern practices as the platform grows</li>
+          </ul>
+
+          <p class="note">
+            Add policy pages:
+            <a href="terms.html">Terms</a> • <a href="privacy.html">Privacy</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="section-title">
+        <h2>Contact</h2>
+        <p>Questions, early access, or support—reach out any time.</p>
+      </div>
+
+      <div class="contact">
+        <div>
+          <strong>Support email</strong><br />
+          <span style="color: var(--muted);">support@henrydelgado.me</span>
+          <div class="note">
+            If you need help with trial access, billing, or a cancellation request, email support and we’ll respond as quickly as possible.
+          </div>
+        </div>
+
+        <div class="hero-actions" style="margin:0;">
+          <a class="btn primary" href="mailto:support@henrydelgado.me?subject=Home%20Groups%20-%20Support">
+            Email support <span aria-hidden="true">→</span>
+          </a>
+          <a class="btn" href="https://www.linkedin.com/in/YOUR_LINKEDIN_HERE" target="_blank" rel="noreferrer noopener">
+            LinkedIn <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-grid">
+        <div>
+          <strong>Home Groups</strong> <span style="color: var(--subtle);">by Henry Delgado</span><br />
+          <span style="color: var(--subtle);">Software Engineer & Business Entrepreneur</span>
+        </div>
+
+        <div class="links">
+          <a href="terms.html">Terms</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="mailto:support@henrydelgado.me?subject=Home%20Groups%20-%20General%20Question">Contact</a>
+        </div>
+      </div>
+
+      <div style="margin-top: 12px;">
+        © <span id="year"></span> Home Groups. All rights reserved.
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
